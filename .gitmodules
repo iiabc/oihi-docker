@@ -1,0 +1,6 @@
+[submodule "web/oihi"]
+	path = web/oihi
+	url = https://github.com/iiabc/oihi.git
+[submodule "python/bupi"]
+	path = python/bupi
+	url = https://github.com/iiabc/bupi.git
