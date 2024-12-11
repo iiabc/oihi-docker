@@ -1,22 +1,25 @@
 # 使用 Node.js 16-alpine 镜像作为基础镜像
 FROM node:16-alpine
 
-# 设置工作目录为 /web
-WORKDIR /web
+# 设置工作目录为 /web/oihi
+WORKDIR /web/oihi
 
 # 启用 corepack 并安装 pnpm
 RUN corepack enable pnpm
 
 # 将 pnpm-lock.yaml 复制到容器中，并下载依赖（使用 pnpm fetch 来提高构建效率）
-COPY pnpm-lock.yaml ./
+COPY oihi/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN pnpm fetch
 
 # 复制 package.json 并安装依赖
-COPY package.json ./
+COPY oihi/package.json ./package.json
 RUN pnpm install --offline
 
 # 复制项目的其他文件
-COPY . .
+COPY oihi/ .
+
+# 直接复制本地的 .env.local 文件到容器中
+COPY .env.local /web/.env.local
 
 # 构建 Next.js 应用
 RUN pnpm build
